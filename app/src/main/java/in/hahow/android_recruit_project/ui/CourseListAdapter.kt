@@ -29,7 +29,10 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
     class ItemViewHolder(private val binding: ItemCourseListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun setItem(item: CourseBundle) {
-            // TODO: FATAL: set item
+            binding.run {
+                textTitle.text = item.title
+                // TODO: FATAL: 帶入圖片顯示
+            }
             when (item.status) {
                 "INCUBATING" -> binding.setAsIncubating(item)
                 else -> binding.setAsProgress(item)
@@ -42,11 +45,11 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             val color = ContextCompat.getColor(context, R.color.teal)
             textStatus.text = context.getString(R.string.desc_course_status_success)
             textStatus.backgroundTintList = ColorStateList.valueOf(color)
-            textTitle.text = "進行中課程"
             progressBar.setIndicatorColor(color)
-            progressBar.progress = 65
+            // TODO: 似乎全部都是 100%...?
+            progressBar.progress = 100
             progressBar.max = 100
-            textProgress.text = context.getString(R.string.desc_course_progress, "65")
+            textProgress.text = context.getString(R.string.desc_course_progress, "100")
             textCountdown.isInvisible = true
         }
 
@@ -55,13 +58,16 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             val color = ContextCompat.getColor(context, R.color.orange)
             textStatus.text = context.getString(R.string.desc_course_status_incubating)
             textStatus.backgroundTintList = ColorStateList.valueOf(color)
-            textTitle.text = "募資中課程"
             progressBar.setIndicatorColor(color)
-            progressBar.progress = 10
-            progressBar.max = 30
-            textProgress.text =
-                context.getString(R.string.desc_course_incubating_progress_people, 10, 30)
+            val successAmount = item.successCriteria.numSoldTickets
+            val nowAmount = item.numSoldTickets
+            progressBar.progress = nowAmount
+            progressBar.max = successAmount
+            textProgress.text = context.getString(
+                R.string.desc_course_incubating_progress_people, nowAmount, successAmount
+            )
             textCountdown.isInvisible = false
+            // TODO: WARN: 處理天數顯示
             textCountdown.text = context.getString(R.string.desc_course_countdown, "13天")
         }
     }
