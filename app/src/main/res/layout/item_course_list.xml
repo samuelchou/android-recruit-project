@@ -54,13 +54,16 @@
 
         <TextView
             android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="@string/desc_course_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guidelineImage"
             app:layout_constraintTop_toTopOf="parent" />
 
