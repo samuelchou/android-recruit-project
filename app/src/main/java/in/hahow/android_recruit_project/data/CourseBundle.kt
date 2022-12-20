@@ -1,5 +1,6 @@
 package `in`.hahow.android_recruit_project.data
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,4 +17,10 @@ data class CourseBundle(
 @Serializable
 data class CourseSuccessCriteria(
     val numSoldTickets: Int,
+)
+
+@Serializable
+data class CourseListBundle(
+    @SerialName("data")
+    val list: List<CourseBundle>,
 )
