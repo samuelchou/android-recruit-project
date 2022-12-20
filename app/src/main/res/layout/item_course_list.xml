@@ -59,7 +59,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/desc_course_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/guidelineImage"
             app:layout_constraintTop_toTopOf="parent" />
