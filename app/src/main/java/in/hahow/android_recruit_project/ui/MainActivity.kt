@@ -1,11 +1,14 @@
 package `in`.hahow.android_recruit_project.ui
 
+import `in`.hahow.android_recruit_project.R
 import `in`.hahow.android_recruit_project.databinding.ActivityMainRecyclerviewBinding
+import `in`.hahow.android_recruit_project.ui.component.CancellableDividerItemDecoration
 import `in`.hahow.android_recruit_project.viewModel.CourseListViewModel
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,6 +44,14 @@ class MainActivity : AppCompatActivity() {
             layoutManager =
                 LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             setAdapter(adapter)
+            (object : CancellableDividerItemDecoration(context, LinearLayoutManager.VERTICAL) {
+                override fun shouldShowDivider(
+                    index: Int, startIndex: Int, lastIndex: Int
+                ): Boolean = index < lastIndex
+            }.apply {
+                ResourcesCompat.getDrawable(resources, R.drawable.divider_course, context.theme)
+                    ?.also { setDrawable(it) }
+            }).let { addItemDecoration(it) }
         }
 
         viewModel.list.observe(this) {
