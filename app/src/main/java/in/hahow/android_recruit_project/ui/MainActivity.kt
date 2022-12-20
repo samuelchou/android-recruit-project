@@ -13,6 +13,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: CourseListViewModel by viewModels()
+    // or by old school Factory + Provider
+//    private val viewModel: CourseListViewModel by lazy {
+//        ViewModelProvider(
+//            this, CourseListViewModelFactory(CourseListLoaderRepositoryImpl())
+//        )[CourseListViewModel::class.java]
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
