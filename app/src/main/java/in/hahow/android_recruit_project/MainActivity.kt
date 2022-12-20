@@ -1,12 +1,16 @@
 package `in`.hahow.android_recruit_project
 
 import `in`.hahow.android_recruit_project.databinding.ActivityMainBinding
-import androidx.appcompat.app.AppCompatActivity
+import `in`.hahow.android_recruit_project.viewModel.CourseListViewModel
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: CourseListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
-        binding.textView.text = "Hello Data Binding!"
+        viewModel.debugMessage.observe(this) {
+            binding.textView.text = "Hello $it"
+        }
     }
 }
