@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     // or by old school Factory + Provider
 //    private val viewModel: CourseListViewModel by lazy {
 //        ViewModelProvider(
-//            this, CourseListViewModelFactory(CourseListLoaderRepositoryImpl())
+//            this, CourseListViewModelFactory(CourseListLoaderRepositoryImpl(this))
 //        )[CourseListViewModel::class.java]
 //    }
 
