@@ -1,4 +1,4 @@
-package `in`.hahow.android_recruit_project
+package `in`.hahow.android_recruit_project.ui
 
 import `in`.hahow.android_recruit_project.databinding.ActivityMainBinding
 import `in`.hahow.android_recruit_project.viewModel.CourseListViewModel
