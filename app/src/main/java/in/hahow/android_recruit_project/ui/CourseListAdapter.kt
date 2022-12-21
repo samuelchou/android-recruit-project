@@ -71,9 +71,16 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             val nowAmount = item.numSoldTickets
             progressBar.max = successAmount
             progressBar.progress = nowAmount
-            textProgress.text = context.getString(
-                R.string.desc_course_incubating_progress_people, nowAmount, successAmount
-            )
+            // 2022.12.21 新規格指定：超過時改顯示 % 數
+            textProgress.text = if (nowAmount < successAmount) {
+                context.getString(
+                    R.string.desc_course_incubating_progress_people, nowAmount, successAmount
+                )
+            } else {
+                context.getString(
+                    R.string.desc_course_progress, "%.0f".format(nowAmount * 100f / successAmount)
+                )
+            }
             val daysCountDown: Long = item.getDueTime()?.let {
                 LocalDateTime.now().until(it, ChronoUnit.DAYS)
             } ?: run {
