@@ -11,6 +11,7 @@ import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(CourseDiffCallback) {
 
@@ -31,7 +32,9 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
         fun setItem(item: CourseBundle) {
             binding.run {
                 textTitle.text = item.title
-                // TODO: FATAL: 帶入圖片顯示
+                Glide.with(root).load(item.coverImageUrl)
+                    .centerCrop().placeholder(R.drawable.demo_course_image)
+                    .into(image)
             }
             when (item.status) {
                 "INCUBATING" -> binding.setAsIncubating(item)
