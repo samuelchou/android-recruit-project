@@ -51,10 +51,12 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             textStatus.text = context.getString(R.string.desc_course_status_success)
             textStatus.backgroundTintList = ColorStateList.valueOf(color)
             progressBar.setIndicatorColor(color)
-            // TODO: 似乎全部都是 100%...?
-            progressBar.progress = 100
-            progressBar.max = 100
-            textProgress.text = context.getString(R.string.desc_course_progress, "100")
+            // 2022.12.21 新規格指定：顯示募資人數 / 目標人數
+            progressBar.progress = item.numSoldTickets
+            progressBar.max = item.successCriteria.numSoldTickets
+            val ratio = item.numSoldTickets * 1f / item.successCriteria.numSoldTickets
+            textProgress.text =
+                context.getString(R.string.desc_course_progress, "%.0f".format(ratio * 100))
             textCountdown.isInvisible = true
         }
 
