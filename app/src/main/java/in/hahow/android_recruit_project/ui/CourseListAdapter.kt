@@ -53,8 +53,8 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             textStatus.backgroundTintList = ColorStateList.valueOf(color)
             progressBar.setIndicatorColor(color)
             // 2022.12.21 新規格指定：顯示募資人數 / 目標人數
-            progressBar.progress = item.numSoldTickets
             progressBar.max = item.successCriteria.numSoldTickets
+            progressBar.progress = item.numSoldTickets
             val ratio = item.numSoldTickets * 1f / item.successCriteria.numSoldTickets
             textProgress.text =
                 context.getString(R.string.desc_course_progress, "%.0f".format(ratio * 100))
@@ -69,8 +69,8 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             progressBar.setIndicatorColor(color)
             val successAmount = item.successCriteria.numSoldTickets
             val nowAmount = item.numSoldTickets
-            progressBar.progress = nowAmount
             progressBar.max = successAmount
+            progressBar.progress = nowAmount
             textProgress.text = context.getString(
                 R.string.desc_course_incubating_progress_people, nowAmount, successAmount
             )
