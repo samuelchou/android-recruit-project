@@ -29,7 +29,7 @@
 
 1. 框架：MVVM 搭配依賴注入 (Hilt)
 2. 解析資料：KotlinX Serialization, Java 8 LocalDateTime
-3. 視圖元件：RecyclerView
+3. 特殊視圖元件：RecyclerView, CardView, ConstraintLayout
 4. 圖片載入：Glide
 
 ---
