@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(CourseDiffCallback) {
 
@@ -69,9 +71,14 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             textProgress.text = context.getString(
                 R.string.desc_course_incubating_progress_people, nowAmount, successAmount
             )
-            textCountdown.isInvisible = false
-            // TODO: WARN: 處理天數顯示
-            textCountdown.text = context.getString(R.string.desc_course_countdown, "13天")
+            val daysCountDown: Long = item.getDueTime()?.let {
+                LocalDateTime.now().until(it, ChronoUnit.DAYS)
+            } ?: run {
+                textCountdown.isInvisible = true
+                return
+            }
+            textCountdown.text =
+                context.getString(R.string.desc_course_countdown, "${daysCountDown}天")
         }
     }
 }

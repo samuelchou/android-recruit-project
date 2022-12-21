@@ -6,6 +6,7 @@ import `in`.hahow.android_recruit_project.util.readStringFromResourcesFile
 import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 class DeserializeUnitTest {
     private fun readRaw(fileName: String) = readStringFromResourcesFile(fileName, "raw/")
@@ -53,5 +54,15 @@ class DeserializeUnitTest {
             assertEquals(30, bundle.successCriteria.numSoldTickets)
             assertEquals(null, bundle.getDueTime())
         }
+    }
+
+    @Test
+    fun timeCalculating() {
+        val date1 = LocalDateTime.of(2022, 12, 21, 15, 0,0)
+        val date2 = LocalDateTime.of(2022, 12, 31, 16, 0,0)
+        val date3 = LocalDateTime.of(2022, 12, 19, 16, 0,0)
+
+        assertEquals(10L, date1.until(date2, ChronoUnit.DAYS))
+        assertEquals(-1L, date1.until(date3, ChronoUnit.DAYS))
     }
 }
