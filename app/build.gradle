@@ -13,8 +13,8 @@ android {
         applicationId "in.hahow.android_recruit_project"
         minSdk 21
         targetSdk 32
-        versionCode 49
-        versionName "1.0.0"
+        versionCode 60
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
