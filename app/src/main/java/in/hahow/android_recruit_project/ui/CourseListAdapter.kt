@@ -80,6 +80,7 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
                 textCountdown.isInvisible = true
                 return
             }
+            textCountdown.isInvisible = false
             textCountdown.text =
                 context.getString(R.string.desc_course_countdown, "${daysCountDown}天")
         }
