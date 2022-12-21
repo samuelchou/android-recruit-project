@@ -3,10 +3,11 @@
 
     <!-- 課程 -->
     <string name="desc_course_image">課程圖片</string>
-    <string name="desc_course_status_success">已開課</string>
+    <string name="desc_course_status_published">已開課</string>
     <string name="desc_course_status_incubating">募資中</string>
+    <string name="desc_course_status_incubating_success">募資成功</string>
     <string name="desc_course_title">課程標題</string>
-    <string name="desc_course_countdown">倒數 %s</string>
+    <string name="desc_course_countdown">倒數%s</string>
     <string name="desc_course_incubating_progress_people"> %1$d / %2$d 人</string>
     <string name="desc_course_progress">%s%%</string>
 </resources>

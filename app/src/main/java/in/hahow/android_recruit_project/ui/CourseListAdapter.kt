@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(CourseDiffCallback) {
 
@@ -38,6 +40,7 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             }
             when (item.status) {
                 "INCUBATING" -> binding.setAsIncubating(item)
+                "SUCCESS" -> binding.setAsSuccess(item)
                 else -> binding.setAsProgress(item)
             }
             binding.executePendingBindings()
@@ -46,13 +49,15 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
         private fun ItemCourseListBinding.setAsProgress(item: CourseBundle) {
             val context = root.context
             val color = ContextCompat.getColor(context, R.color.teal)
-            textStatus.text = context.getString(R.string.desc_course_status_success)
+            textStatus.text = context.getString(R.string.desc_course_status_published)
             textStatus.backgroundTintList = ColorStateList.valueOf(color)
             progressBar.setIndicatorColor(color)
-            // TODO: 似乎全部都是 100%...?
-            progressBar.progress = 100
-            progressBar.max = 100
-            textProgress.text = context.getString(R.string.desc_course_progress, "100")
+            // 2022.12.21 新規格指定：顯示募資人數 / 目標人數
+            progressBar.max = item.successCriteria.numSoldTickets
+            progressBar.progress = item.numSoldTickets
+            val ratio = item.numSoldTickets * 1f / item.successCriteria.numSoldTickets
+            textProgress.text =
+                context.getString(R.string.desc_course_progress, "%.0f".format(ratio * 100))
             textCountdown.isInvisible = true
         }
 
@@ -64,14 +69,33 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             progressBar.setIndicatorColor(color)
             val successAmount = item.successCriteria.numSoldTickets
             val nowAmount = item.numSoldTickets
-            progressBar.progress = nowAmount
             progressBar.max = successAmount
-            textProgress.text = context.getString(
-                R.string.desc_course_incubating_progress_people, nowAmount, successAmount
-            )
+            progressBar.progress = nowAmount
+            // 2022.12.21 新規格指定：超過時改顯示 % 數
+            textProgress.text = if (nowAmount < successAmount) {
+                context.getString(
+                    R.string.desc_course_incubating_progress_people, nowAmount, successAmount
+                )
+            } else {
+                context.getString(
+                    R.string.desc_course_progress, "%.0f".format(nowAmount * 100f / successAmount)
+                )
+            }
+            val daysCountDown: Long = item.getDueTime()?.let {
+                LocalDateTime.now().until(it, ChronoUnit.DAYS)
+            } ?: run {
+                textCountdown.isInvisible = true
+                return
+            }
             textCountdown.isInvisible = false
-            // TODO: WARN: 處理天數顯示
-            textCountdown.text = context.getString(R.string.desc_course_countdown, "13天")
+            textCountdown.text =
+                context.getString(R.string.desc_course_countdown, "${daysCountDown}天")
+        }
+
+        private fun ItemCourseListBinding.setAsSuccess(item: CourseBundle) {
+            setAsIncubating(item)
+            val context = root.context
+            textStatus.text = context.getString(R.string.desc_course_status_incubating_success)
         }
     }
 }
