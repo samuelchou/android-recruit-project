@@ -40,7 +40,7 @@
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="4dp"
-                android:text="@string/desc_course_status_success"
+                android:text="@string/desc_course_status_published"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white" />
         </androidx.cardview.widget.CardView>

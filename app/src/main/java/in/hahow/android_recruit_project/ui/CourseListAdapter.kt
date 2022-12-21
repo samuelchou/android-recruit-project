@@ -40,6 +40,7 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             }
             when (item.status) {
                 "INCUBATING" -> binding.setAsIncubating(item)
+                "SUCCESS" -> binding.setAsSuccess(item)
                 else -> binding.setAsProgress(item)
             }
             binding.executePendingBindings()
@@ -48,7 +49,7 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
         private fun ItemCourseListBinding.setAsProgress(item: CourseBundle) {
             val context = root.context
             val color = ContextCompat.getColor(context, R.color.teal)
-            textStatus.text = context.getString(R.string.desc_course_status_success)
+            textStatus.text = context.getString(R.string.desc_course_status_published)
             textStatus.backgroundTintList = ColorStateList.valueOf(color)
             progressBar.setIndicatorColor(color)
             // 2022.12.21 新規格指定：顯示募資人數 / 目標人數
@@ -81,6 +82,12 @@ class CourseListAdapter : ListAdapter<CourseBundle, RecyclerView.ViewHolder>(Cou
             }
             textCountdown.text =
                 context.getString(R.string.desc_course_countdown, "${daysCountDown}天")
+        }
+
+        private fun ItemCourseListBinding.setAsSuccess(item: CourseBundle) {
+            setAsIncubating(item)
+            val context = root.context
+            textStatus.text = context.getString(R.string.desc_course_status_incubating_success)
         }
     }
 }
